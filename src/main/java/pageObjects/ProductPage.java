@@ -45,12 +45,16 @@ public class ProductPage extends BasePage {
 //    }
 
     public void setDeliveryDate() {
-        LocalDate date = LocalDate.now().plusDays(5);
-        String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    	JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView(true);", input_DeliveryDate);
 
-        scrollToView(input_DeliveryDate);
-        input_DeliveryDate.clear();
-        input_DeliveryDate.sendKeys(formattedDate);
+		  LocalDate deliveryDate = LocalDate.now().plusDays(5);
+		  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		  String dateValue = deliveryDate.format(formatter);
+
+		  js.executeScript(
+		      "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('change'));",
+		      input_DeliveryDate,dateValue);
     }
     
     
